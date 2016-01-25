@@ -4,8 +4,7 @@ import random
 pickupchains = 0
 health = 100
 foodList = {'Apple':15, 'Purified Water':25, 'Energy Bar':30, 'Raw Potatoes':-5, 'Bag of chips':10, 'Bread':20, 'Carrot':35, 'Vitamins':40, 'Apple with a worm':-10}
-randomx = foodList[random.randrange(foodList.values())]
-randomy = foodList[random.randrange(foodList.values())]
+
 def start():
     print ('''Zzzzzz Zzzzzz Zzzz...... uhh where.. where am I?????''')
     time.sleep(2.5)
