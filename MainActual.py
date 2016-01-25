@@ -2,10 +2,10 @@ import time
 import random
 
 pickupchains = 0
-health = 100
 foodList = {'Apple':15, 'Purified Water':25, 'Energy Bar':30, 'Raw Potatoes':-5, 'Bag of chips':10, 'Bread':20, 'Carrot':35, 'Vitamins':40, 'Apple with a worm':-10}
-
+health = 100
 def start():
+    health = 100
     print ('''Zzzzzz Zzzzzz Zzzz...... uhh where.. where am I?????''')
     time.sleep(2.5)
     print ('''You move around on the bed and chains clink together.''')
@@ -35,13 +35,14 @@ def prompt_chains():
     elif prompt_0 == '2':
         print ('You panic realizing someone put you in these chains and break out furiously hurting yourself in the process')
         print ('You lost 75 health')
-        health = health - 75
+        global health = global health - 75
+        print("Your health: "+ health)
         time.sleep(2)
         
     elif prompt_0 == '3':
         print ('You lost only 55 health')
         health = health - 55
-
+        
 
 def prompt_wrapchains():
     prompt_0 = input('Type your choice: ')
@@ -66,12 +67,16 @@ def prompt_survival():
         
         print ("You have found a refrigerator")
         print ("Do you want to eat 1 food item(1) or 2 food items(2). (Warning: There\'s a chance of getting poisoned)")
+    elif prompt_0 == '3':
+        print ('You walk to the other end of the room and feel along the wall for a phone.')
+        time.sleep(2)
+        print ('You don\'t find a phone')
+        
 
 def prompt_numfood():
     prompt_0 = input("Type your choice: ")
-    if prompt_0 == '1':
-        xvalue = foodList[x]
-        yvalue = foodList[y]
+    
+        
         
 
     
