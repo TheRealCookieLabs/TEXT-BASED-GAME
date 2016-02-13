@@ -248,10 +248,22 @@ def prompt_attackzombie():
             print("You feel adrenaline rush through your veins.")
             time.sleep(2)
             print("You have the option of running away(1) or continue fighting the zombie with new strength(2).")
+            prompt_adrenalinerush()
 
-            
-            
-        
+def prompt_adrenalinerush
+    global health
+    global zombieHealth
+    global meleeAttack
+    global kickAttack
+    global zombieScratchAttack
+    prompt_0 = input("Type your choice: ")
+    if prompt_0 == '1':
+        print("You get up and run down the hallway, with the zombie following behind you.)
+        time.sleep(2)
+        print("When you get to the end of the hallway, you see a locker(1) that you could jump into to hide, or you can keep running(2).)      
+        prompt_hiderun()
+    if prompt_0 == '2':
+              
     
         
     
