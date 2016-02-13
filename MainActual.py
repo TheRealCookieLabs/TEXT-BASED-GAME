@@ -14,6 +14,7 @@ prompt_0 = 0
     
 foodList = {'Apple':15, 'Purified Water':25, 'Energy Bar':30, 'Raw Potatoes':-5, 'Bag of chips':10, 'Bread':20, 'Carrot':35, 'Vitamins':40, 'Apple with a worm':-10}
 chains = False
+
 def start():
     global health
     global prompt_0
@@ -226,15 +227,30 @@ def prompt_attackzombie():
     global zombieScratchAttack
     prompt_0 = input("Type your choice: ")
     if prompt_0 == '1':
-        if zombieHealth > 25:
-            print("Zombie deals 5 damage while choking you.")
+        while(zombieHealth > 25):
+            print("Zombie deals 5 damage by choking you.")
+            time.sleep(2)
             health = health - 5
+            
+            if health <= 0:
+                print("You have died. GAME OVER!")
+                break
+                
+            print("YOUR HEALTH: " + str(health))
+            time.sleep(2)
             print("You deal " + str(meleeAttack)+ " damage to the zombie")
+            time.sleep(2)
+            zombieHealth = zombieHealth - meleeAttack
+            print("ZOMBIE'S HEALTH: " + str(zombieHealth))
+        if(zombieHealth < 25):
+            print("ZOMBIE HEALTH: " + str(zombieHealth))
+            print("Good Job! You have gotten the zombie to half of its health. It has released its grip and let you go")
+
+            
             
         
     
         
-
     
 start()
 
