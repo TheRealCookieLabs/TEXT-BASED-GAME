@@ -243,8 +243,11 @@ def prompt_attackzombie():
             zombieHealth = zombieHealth - meleeAttack
             print("ZOMBIE'S HEALTH: " + str(zombieHealth))
         if(zombieHealth < 25):
-            print("ZOMBIE HEALTH: " + str(zombieHealth))
-            print("Good Job! You have gotten the zombie to half of its health. It has released its grip and let you go")
+            print("Good Job! You have gotten the zombie to half of its health. It has released its grip and let you go.")
+            time.sleep(2.5)
+            print("You feel adrenaline rush through your veins.")
+            time.sleep(2)
+            print("You have the option of running away(1) or continue fighting the zombie with new strength(2).")
 
             
             
