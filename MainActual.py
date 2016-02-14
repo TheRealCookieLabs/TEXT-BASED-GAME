@@ -1,6 +1,5 @@
 import time
 import random
-
 pickupchains = 0
 
 health = 100
@@ -9,11 +8,20 @@ kickAttack = 8
 zombieHealth = 50
 zombieScratchAttack = 8
 prompt_0 = 0
-
+morale = 20
 
     
-foodList = {'Apple':15, 'Purified Water':25, 'Energy Bar':30, 'Raw Potatoes':-5, 'Bag of chips':10, 'Bread':20, 'Carrot':35, 'Vitamins':40, 'Apple with a worm':-10}
+foodDict = {'Apple':30, 'Purified Water':25, 'Energy Bar':35, 'Raw Potatoes':-5, 'Bag of chips':10, 'Bread':15, 'Carrot':20, 'Vitamins':40, 'Apple with a worm':-10}
+foodList = ['Apple','Purified Water', 'Energy Bar', 'Raw Potatoes', 'Bag of chips', 'Bread', 'Carrot', 'Vitamins', 'Apple with a worm']
+
 chains = False
+
+x = random.randint(0,8)
+y = random.randint(0,8)
+while(y == x):
+    y = random.randint(0,8)
+firstItem = foodList[x]
+secondItem = foodList[y]
 
 def start():
     global health
@@ -39,6 +47,8 @@ If you wanna play it safe, you could search for a phone and call 911(3).''')
     if(prompt_0 == '1'):
         prompt_explorefacility()
         print('')
+    if(prompt_0 == '2'):
+        prompt_findfood()
     if(prompt_0 == '3'):
         print('You see a fire escape you could get onto(1) or you could continue to look for a phone(2)')
         prompt_phonedecision()
@@ -72,10 +82,12 @@ def prompt_chains():
 
 def prompt_wrapchains():
     global meleeAttack
+    global pickupchains
     prompt_0 = input('Type your choice: ')
     if prompt_0 == '1':
         global attack
         print('You have wrapped chains around your hand. Your attack has been boosted!')
+        pickupchains = 1
         meleeAttack = meleeAttack + 3
         print('Your attack: ' + str(meleeAttack))
         time.sleep(2)
@@ -96,9 +108,6 @@ def prompt_survival():
         print ('You let your eyes adjust to the dark. You can see a little better.')
         time.sleep(2)
         #make screen even less black
-    elif prompt_0 == '2':
-        print ("You have found a refrigerator")
-        print ("Do you want to eat 1 food item(1) or 2 food items(2). (Warning: There\'s a chance of getting poisoned)")
     elif prompt_0 == '3':
         print ('You walk to the other end of the room and feel along the wall for a phone.')
         time.sleep(2)
@@ -138,13 +147,14 @@ def prompt_choosedoor():
         prompt_attackzombie()
                 
 def prompt_opendoor():
+    global morale
     print("")
     prompt_0 = input("Type your choice: ")
     if prompt_0 == '1':
         print('He runs in and mumbles \"Thank you,\" and he runs up the stairs quickly')
         time.sleep(2)
         print('''Do you want to find out what the man was running away from by exploring the second floor of the asylum(1)
-                         or go up to the third floor and see if you can get more info from the man(2).''')
+or go up to the third floor and see if you can get more info from the man(2).''')
         prompt_choosingfloors()
     elif prompt_0 == '2':
         print('''Realizing that you don\'t know this guy at all or what his intent is, you stay on the stairs watching his face through the small glass
@@ -154,6 +164,10 @@ window of the door. He looks panicked and keeps pounding on the door whilst look
         time.sleep(2)
         print('You realize that you are going to have to be alot more careful as you walk around this odd place.')
         time.sleep(3)
+        print('You have lost 5 morale because you let the man die instead of helping him. If you lose all the morale, you will lose the will to continue going.')
+        morale = morale - 5
+        print("YOUR MORALE: " + str(morale))
+        time.sleep(2)
         print('Now do you go up to the third floor to search for more items(1), or you can head all the way down to the first floor(2).')
         prompt_returnfloor()
                 
@@ -205,20 +219,32 @@ def prompt_choosingfloors():
         while(health > 0):
               print("Your health: " + str(health))
               health = health - 10
-              time.sleep(1.5)
+              time.sleep(1.25)
         if health <= 0:
               print('You are dead. GAME OVER.')
-              time.sleep(3000) 
+              time.sleep(5)
+              
               
 def prompt_returnfloor():
+    global health
     prompt_0 = input("Type your choice: ")
     if prompt_0 == '1':
-        print('You walk back up the stairs slowly and you are still traumatized from the zombie. You are scared that you will never be able to leave the facility.')
+        print('You walk back up the stairs slowly and you are still traumatized from the zombie. You are scared that you might die in this facility.')
         time.sleep(3)
-        print('As you open the door, you see a bloodthirsty zombie waiting for you.')
-        time.sleep(2)
-        print('It starts scratching at your head, hissing. You fall to the ground hopelessly.')
+        print('You head back onto the third floor.')
+        time.sleep(1.5)
         
+    if prompt_0 == '2':
+         print('You walk down the stairs and can\'t help but feel sorry for the guy you just watched get killed.')
+         time.sleep(2)
+         print('You make it to the first floor and check both ways now, not knowing when you might find the same fate as the man on the second floor.')
+         time.sleep(2.5)
+         print('You look out into the hallway, and notice the gleam of moon light washing over the floor. That has to be an exit.')
+         time.sleep(2.25)
+         print('You can examine the possible exit(1), or you can go search for items on the rest of the first floor(2).')
+         prompt_exit1stfloor()
+         
+                
 def prompt_attackzombie():
     global health
     global zombieHealth
@@ -250,7 +276,7 @@ def prompt_attackzombie():
             print("You have the option of running away(1) or continue fighting the zombie with new strength(2).")
             prompt_adrenalinerush()
 
-def prompt_adrenalinerush
+def prompt_adrenalinerush():
     global health
     global zombieHealth
     global meleeAttack
@@ -258,14 +284,103 @@ def prompt_adrenalinerush
     global zombieScratchAttack
     prompt_0 = input("Type your choice: ")
     if prompt_0 == '1':
-        print("You get up and run down the hallway, with the zombie following behind you.)
+        print("You get up and run down the hallway, with the zombie following behind you.")
         time.sleep(2)
-        print("When you get to the end of the hallway, you see a locker(1) that you could jump into to hide, or you can keep running(2).)      
+        print("When you get to the end of the hallway, you see a locker(1) that you could jump into to hide, or you can keep running(2).")      
         prompt_hiderun()
     if prompt_0 == '2':
-              
+        print("You continue to attack the zombie, and the zombie starts scratching you.")
+
+def prompt_findfood():
+    global health
+    print("You come up to a refrigerator and decide to open to see if there's any food in it.")
+    time.sleep(3)
+    print("You found " + str(firstItem) + " and " + str(secondItem) + ".")
+    time.sleep(3)
+    print("The " + str(firstItem) + " added " + str(foodDict[firstItem]) + " to your health")
+    health = health + foodDict[firstItem]
+    if health > 100:
+        health = 100
+    print("YOUR HEALTH: " + str(health))
+    time.sleep(2)
+    print("The " + str(secondItem) + " added " + str(foodDict[secondItem]) + " to your health")
+    health = health + foodDict[secondItem]
+    if health > 100:
+        health = 100
+    print("YOUR HEALTH: " + str(health))
+    time.sleep(2)
+    print("After checking the fridge, you decide you have two options.")
+    time.sleep(2)            
+    print("You can either look around the room for something else(1), or go out in the hallway(2).")          
+    prompt_fooddecision()
+
+def prompt_fooddecision():
+    global meleeAttack
+    prompt_0 = input("Type your choice: ")
+    if prompt_0 == '1':
+        print("You search around the room and find a couple of items.")
+        time.sleep(2)
+        print("The items are: A wrench(1), a lead pipe(2), and a pair of crutches(3).")
+        prompt_weaponchoice()
+    if prompt_0 == '2':
+        print('You can barely make out the outline of 1 door on both sides of the hallway.')
+    time.sleep(2)
+    print("Do you want to go to go through one of the doors(1) or head down the hallway to go down the stairs(2)")
+    prompt_0 = input("Type your choice: ")
+    if prompt_0 == '1':
+        print('Do you want to the room on the left(1) or the right(2)?')
+        prompt_choosedoor()
+    elif prompt_0 == '2':
+        print("You walk down the stairs cautiously because you hear a noise that sounds like approaching footsteps.")
+        time.sleep(2.5)
+        print("You see a face of another human and you rush over to open the door, but realize it is locked.")
+        time.sleep(2)
+        print('Do you open the door and let the man in(1) or do you leave the unknown person locked out(2)?')
+        prompt_opendoor()
+        
+def prompt_weaponchoice():
+    global meleeAttack
+    prompt_0 = input("Type your choice: ")
+    if prompt_0 == '1':
+        if pickupchains == 1:
+            print("Do you want to keep your chains(1) or pick up the wrench(2)?")
+            prompt_keepwrench()
+        if pickupchains == 0:
+            print("You pick up the wrench.")
+            time.sleep(1.5)
+            print("Your attack is boosted by 5")
+            meleeAttack = meleeAttack + 5
+            time.sleep(1.5)
+            print("YOUR ATTACK: " + str(meleeAttack))
+            prompt_afterchoosingnewweapon()
+    if prompt_0 == '2':
+        if pickupchains == 1:
+            print("Do you want to keep your chains(1) or pick up the lead pipe(2)?")
+            prompt_keepleadpipe()
+        if pickupchains == 0:
+            print("You pick up the lead pipe.")
+            time.sleep(1.5)
+            print("Your attack is boosted by 4")
+            meleeAttack = meleeAttack + 4
+            time.sleep(1.5)
+            print("YOUR ATTACK: " + str(meleeAttack))
+            prompt_afterchoosingnewweapon()
+    if prompt_0 == '3':
+        if pickupchains == 1:
+            print("Do you want to keep your chains(1) or pick up the lead crutches(2)?")
+            prompt_keepcrutches()
+        if pickupchains == 0:
+            print("You pick up the crutches.")
+            time.sleep(1.5)
+            print("Your attack is boosted by 7")
+            meleeAttack = meleeAttack + 7
+            time.sleep(1.5)
+            print("YOUR ATTACK: " + str(meleeAttack))
+            prompt_afterchoosingnewweapon()
+
     
         
-    
+
+
 start()
 
